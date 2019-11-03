@@ -1,42 +1,37 @@
 <?php
 
-namespace ctwillie\USPS;
+namespace ctwillie\Usps;
 
 use Spatie\ArrayToXml\ArrayToXml;
 
-class Address {
-
+class Address
+{
     public $address1 = "";
     public $address2 = "";
     public $city = "";
     public $state = "";
     public $zip4 = "";
     public $zip5 = "";
-
-    private $userId = 'XXXXXXXXX';
-    // ArrayToXml::convert($array, $rootElem, false)
-    // http://stg-production.shippingapis.com/ShippingApi.dll?
-    // API=Verify&
-    // XML=<AddressValidateRequest USERID="XXXXXXXX">
+    private $userId = 'XXXXXXXX';
 
     public function __construct(array $address = [])
     {
-        foreach($address as $key => $value) {
+        foreach ($address as $key => $value) {
 
             if (property_exists($this, $key)) {
 
                 $this->{$key} = $value;
-
+                
             }
-        
         }
     }
-
     public function createXMLAddress()
     {
         $addressArray = [
 
             "Address" => [
+
+                "_attributes" => ["ID" => "1"],
 
                 "Address1" => $this->address1,
 
@@ -53,15 +48,17 @@ class Address {
             ]
         ];
 
-        return ArrayToXml::convert($addressArray,
+        return ArrayToXml::convert(
+            $addressArray,
             [
                 'rootElementName' => 'AddressValidateRequest',
-
+                
                 '_attributes' => ['USERID' => $this->userId]
 
-            ], false);
+            ], false
+        );
     }
-    
+
     public function verify()
     {
         $addressXML = urlencode($this->createXMLAddress());
@@ -71,8 +68,3 @@ class Address {
         return file_get_contents($url);
     }
 }
-
-
-
-
-

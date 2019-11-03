@@ -1,20 +1,32 @@
 {
-    "name": "ctwillie/laravel-usps",
-    "description": "USPS API wrapper for laravel projects",
-    "type": "metapackage",
-    "authors": [
-        {
-            "name": "Cedric Twillie",
-            "email": "ctwillie77@gmail.com"
-        }
-    ],
-    "require": {
-        "illuminate/support": "^6.4",
-        "spatie/array-to-xml": "^2.11"
-    },
-    "autoload": {
-        "psr-4": {
-            "ctwillie\\": "src/"
-        }
+  "name": "ctwillie/laravel-usps",
+  "description": "USPS API wrapper for laravel framework",
+  "type": "metapackage",
+  "authors": [
+    {
+      "name": "Cedric Twillie",
+      "email": "ctwillie77@gmail.com"
     }
+  ],
+  "require": {
+    "illuminate/support": "^6.4",
+    "spatie/array-to-xml": "^2.11",
+    "guzzlehttp/guzzle": "~6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ctwillie\\Usps\\": "src/"
+    }
+  },
+  "minimum-stability": "dev",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "ctwillie\\Usps\\ServiceProvider"
+      ],
+      "aliases": {
+        "Usps": "ctwillie\\Usps\\Facades\\Usps"
+      }
+    }
+  }
 }
