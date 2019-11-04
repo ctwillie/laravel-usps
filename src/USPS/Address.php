@@ -7,88 +7,98 @@ use GuzzleHttp\Client;
 
 class Address
 {
-    public $address1 = "";
-    public $address2 = "";
-    public $city = "";
-    public $state = "";
-    public $zip4 = "";
-    public $zip5 = "";
-    private $userId = '645NFS002225';
+    protected $addresses = [];
+    public $address1 = '';
+    public $address2 = '';
+    public $city = '';
+    public $state = '';
+    public $zip4 = '';
+    public $zip5 = '';
+    private $USERID = '645NFS002225';
+    protected $allowedProperties = [
+        'Address1',
+        'Address2',
+        'City',
+        'State',
+        'Zip4',
+        'Zip5'
+    ];
+    protected $addressTemplate = [
+        '_attributes' => [],
+        'Address1' => '',
+        'Address2' => '',
+        'City' => '',
+        'State' => '',
+        'Zip5' => '',
+        'Zip4' => ''
+    ];
 
-    public function __construct(array $address = [])
+    public function __construct(array $addresses = [])
     {
-        foreach ($address as $key => $value) {
+        // Process array of addresses passed
+        if (array_key_exists(0, $addresses)) {
 
-            if (property_exists($this, $key)) {
+            foreach ($addresses as $index => $address) {
 
-                $this->{$key} = $value;
-                
+                // check for 5 address limit
+                if (count($this->addresses) === 5) {
+                    throw new \Exception('Only five addresses can be verified per request');
+                }
+
+                // Set to address template
+                $this->addresses[$index] = $this->addressTemplate;
+                // reset address fields
+                $this->addresses[$index]['_attributes'] = ['ID' => $index + 1];
+
+                foreach ($address as $key => $value) {
+
+                    if (in_array($key, $this->allowedProperties)) {
+
+                        $this->addresses[$index][$key] = $value;
+                    }
+                }
+            }
+        } else {
+
+            // Process single address passed
+            $index = 0;
+            // Set to address template
+            $this->addresses[$index] = $this->addressTemplate;
+            // reset address fields
+            $this->addresses[$index]['_attributes'] = ['ID' => $index + 1];
+
+            foreach ($addresses as $key => $value) {
+
+                if (in_array($key, $this->allowedProperties)) {
+
+                    $this->addresses[$index][$key] = $value;
+                }
             }
         }
     }
-    public function createXMLAddress()
+
+    protected function convertAddressesToXML()
     {
-        $addressArray = [
-
-            "Address" => [
-
-                "_attributes" => ["ID" => "1"],
-
-                "Address1" => $this->address1,
-
-                "Address2" => $this->address2,
-
-                "City" => $this->city,
-
-                "State" => $this->state,
-
-                "Zip5" => $this->zip5,
-
-                "Zip4" => $this->zip4
-
-            ]
-        ];
-
         return ArrayToXml::convert(
-            $addressArray,
+            ['Address' => $this->addresses],
             [
                 'rootElementName' => 'AddressValidateRequest',
-                
-                '_attributes' => ['USERID' => $this->userId]
 
-            ], false
+                '_attributes' => ['USERID' => $this->USERID]
+
+            ],
+            false
         );
     }
 
-    public function verify()
+    public function validate()
     {
-        $addressXML = urlencode($this->createXMLAddress());
+        $addressXML = urlencode($this->convertAddressesToXML());
 
         $client = new Client(['base_uri' => 'https://secure.shippingapis.com/', 'verify' => false]);
 
-        $response =  $client->request(
+        $response =  $client->request('GET', "ShippingAPI.dll?API=Verify&XML=$addressXML");
 
-            'GET',
-
-            "ShippingAPI.dll?API=Verify&XML=$addressXML"
-
-        );
-
-        $body = $response->getBody();
-
-        // var_dump(get_class_methods($body));
-        var_dump(gettype($body->getContents()));
-        // echo $body->getContents();
-         
-
-        exit();
-        // HANDLING GUZZLE RESPONSE
-        // $response->getStatusCode();
-        // $response->getReasonPhrase();
-        // $response->hasHeader('Content-Length')
-        // $response->getHeader('Content-Length');
-        //  $response->getHeaders() as $name => $values
-
-
+        return $response->getBody();
     }
 }

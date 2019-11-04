@@ -2,33 +2,43 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-use ctwillie\Usps\MultiAddress;
+use ctwillie\Usps\Address;
 
 // $address = new Address;
 // $address->Address2  = '8448 Gatepost Court';
-// $address->City = 'Jacksonville';
-// $address->State = 'FL';
-// $address->Zip5 = 32207;
+// $address->City = null;
+// $address->State = null;
+// $address->Zip5 = null;
 // $address->verify();
 
 $addr1 = [
-    "Address1" => null,
-    "Address2" => '4925 Spring Glen Road',
-    "City" => 'Jacksonville',
-    "State" => 'FL',
-    "Zip5" => 32207,
-    "Zip4" => null
+    'Address2' => '4925 Spring Glen Road',
+    'City' => 'Jacksonville',
+    'State' => 'FL',
+    'Zip5' => 32207,
 ];
 
 $addr2 = [
-    "Address1" => null,
-    "Address2" => '8448 Gatepost Court',
-    "City" => 'Jacksonville',
-    "State" => 'FL',
-    "Zip5" => 32244,
-    "Zip4" => null
+    'Address1' => null,
+    'Address2' => '8448 Gatepost Court',
+    'City' => 'Jacksonville',
+    'State' => 'FL',
+    'Zip5' => 32244,
+    'Zip4' => null
 ];
 
-$address = new MultiAddress([$addr2, $addr1]);
+// complains about incomplete data
+$addr3 = [
+    'Address1' => null,
+    'Address2' => null,
+    'City' => null,
+    'State' => null,
+    'Zip5' => null,
+    'Zip4' => null
+];
 
-echo $address->verify();
+$address = new Address([$addr1, $addr2]);
+
+// create more readable functions
+// $address->isValid()
+echo $address->validate();

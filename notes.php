@@ -2,6 +2,9 @@
 
 class Notes {
 
+    protected $production = 'http://production.shippingapis.com/ShippingAPI.dll?API=Verify&XML=($address)';
+    protected $secure = 'https://secure.shippingapis.com/ShippingAPI.dll?API=Verify&XML=($address)';
+
     public function createAddressArray($address, $index)
     {
         return [
@@ -36,7 +39,16 @@ class Notes {
             "Zip5" => 32244,
             "Zip4" => null
         ]];
-    } 
+    }
+
+    /**
+     * 
+     * The Address Standardization Web Tool corrects errors in street addresses, 
+     * including abbreviations and missing information, 
+     * and supplies ZIP Codes and ZIP Codes + 4.  It supports up to five lookups per transaction.  
+     * By eliminating address errors, you will improve overall package delivery service.
+     * 
+     */
 
     // public function verify()
     // {
