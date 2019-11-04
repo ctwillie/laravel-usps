@@ -16,7 +16,6 @@ class UspsServiceProvider extends ServiceProvider
    */
   public function register()
   {
-    dd('hello from uspsserviceprovider');
     
     $this->app->singleton('usps', function () {
 
