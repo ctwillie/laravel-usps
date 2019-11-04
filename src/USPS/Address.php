@@ -33,6 +33,12 @@ class Address
         'Zip4' => ''
     ];
 
+    /**
+     * The addresses array is optional.
+     * 
+     * @param array $addresses  A single or multi-dimensional array of address descriptors
+     * 
+     */
     public function __construct(array $addresses = [])
     {
         // Process array of addresses passed
@@ -42,7 +48,7 @@ class Address
 
                 // check for 5 address limit
                 if (count($this->addresses) === 5) {
-                    throw new \Exception('Only five addresses can be verified per request');
+                    throw new \Exception('Only five addresses can be validated per request');
                 }
 
                 // Set to address template
@@ -79,15 +85,13 @@ class Address
 
     protected function convertAddressesToXML()
     {
-        return ArrayToXml::convert(
-            ['Address' => $this->addresses],
+        return ArrayToXml::convert( ['Address' => $this->addresses],
             [
                 'rootElementName' => 'AddressValidateRequest',
 
                 '_attributes' => ['USERID' => $this->USERID]
 
-            ],
-            false
+            ], false
         );
     }
 
