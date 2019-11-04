@@ -14,7 +14,6 @@ class Address
     public $state = '';
     public $zip4 = '';
     public $zip5 = '';
-    private $USERID = '645NFS002225';
     protected $allowedProperties = [
         'Address1',
         'Address2',
@@ -83,7 +82,7 @@ class Address
             [
                 'rootElementName' => 'AddressValidateRequest',
 
-                '_attributes' => ['USERID' => $this->USERID]
+                '_attributes' => ['USERID' => config('services.usps.username')]
 
             ], false
         );
