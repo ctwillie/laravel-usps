@@ -8,12 +8,6 @@ use GuzzleHttp\Client;
 class Address
 {
     protected $addresses = [];
-    public $address1 = '';
-    public $address2 = '';
-    public $city = '';
-    public $state = '';
-    public $zip4 = '';
-    public $zip5 = '';
     protected $allowedProperties = [
         'Address1',
         'Address2',
@@ -34,7 +28,7 @@ class Address
 
     public function __construct(array $addresses = [])
     {
-        // Process array of addresses passed
+        // Process array of addresses
         if (array_key_exists(0, $addresses)) {
 
             foreach ($addresses as $index => $address) {
@@ -46,7 +40,7 @@ class Address
 
                 // Set to address template
                 $this->addresses[$index] = $this->addressTemplate;
-                // reset address fields
+                // set address fields
                 $this->addresses[$index]['_attributes'] = ['ID' => $index + 1];
 
                 foreach ($address as $key => $value) {
@@ -59,7 +53,7 @@ class Address
             }
         } else {
 
-            // Process single address passed
+            // Process single address
             $index = 0;
             // Set to address template
             $this->addresses[$index] = $this->addressTemplate;
@@ -92,7 +86,7 @@ class Address
     {
         $addressXML = urlencode($this->convertAddressesToXML());
 
-        $client = new Client(['base_uri' => 'https://secure.shippingapis.com/', 'verify' => false]);
+        $client = new Client(['base_uri' => 'https://secure.shippingapis.com/', 'verify' => config('services.usps.verifyssl')]);
 
         $response =  $client->request('GET', "ShippingAPI.dll?API=Verify&XML=$addressXML");
 
