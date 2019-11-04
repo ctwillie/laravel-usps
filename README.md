@@ -1,4 +1,4 @@
-# Laravle-Usps
+# Laravel-Usps
 
 Laravel-Usps is an easy to use composer package, that serves as a wrapper for the USPS API. This package aims to make
 interaction with the USPS API simple and intuitive. Currently, this package only provides address verification features, but will
