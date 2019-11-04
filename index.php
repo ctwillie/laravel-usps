@@ -2,36 +2,33 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-use ctwillie\Usps\Address;
+use ctwillie\Usps\MultiAddress;
 
 // $address = new Address;
-// $address->address2  = '8448 Gatepost Court';
-// $address->city = 'Jacksonville';
-// $address->state = 'FL';
-// $address->zip5 = 32207;
+// $address->Address2  = '8448 Gatepost Court';
+// $address->City = 'Jacksonville';
+// $address->State = 'FL';
+// $address->Zip5 = 32207;
+// $address->verify();
 
-$add1 = [
-    "address2" => '4925 Spring Glen Road',
-    "city" => 'Jacksonville',
-    "state" => 'FL',
-    "zip5" => 32207
+$addr1 = [
+    "Address1" => null,
+    "Address2" => '4925 Spring Glen Road',
+    "City" => 'Jacksonville',
+    "State" => 'FL',
+    "Zip5" => 32207,
+    "Zip4" => null
 ];
 
-$add2 = [
-    "address2" => '8 Gatepost Court',
-    "city" => 'Jacksonville',
-    "state" => 'FL',
-    "zip5" => 32244
+$addr2 = [
+    "Address1" => null,
+    "Address2" => '8448 Gatepost Court',
+    "City" => 'Jacksonville',
+    "State" => 'FL',
+    "Zip5" => 32244,
+    "Zip4" => null
 ];
 
-$address = new Address($add2);
+$address = new MultiAddress([$addr2, $addr1]);
 
 echo $address->verify();
-
-
-
-
-
-
-
-exit();

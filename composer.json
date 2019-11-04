@@ -15,18 +15,9 @@
   },
   "autoload": {
     "psr-4": {
-      "ctwillie\\Usps\\": "src/"
+      "ctwillie\\": "src/"
     }
   },
-  "minimum-stability": "dev",
-  "extra": {
-    "laravel": {
-      "providers": [
-        "ctwillie\\Usps\\ServiceProvider"
-      ],
-      "aliases": {
-        "Usps": "ctwillie\\Usps\\Facades\\Usps"
-      }
-    }
-  }
+  "minimum-stability": "dev"
+  
 }

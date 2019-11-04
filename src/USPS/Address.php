@@ -3,6 +3,7 @@
 namespace ctwillie\Usps;
 
 use Spatie\ArrayToXml\ArrayToXml;
+use GuzzleHttp\Client;
 
 class Address
 {
@@ -12,7 +13,7 @@ class Address
     public $state = "";
     public $zip4 = "";
     public $zip5 = "";
-    private $userId = 'XXXXXXXX';
+    private $userId = '645NFS002225';
 
     public function __construct(array $address = [])
     {
@@ -63,8 +64,31 @@ class Address
     {
         $addressXML = urlencode($this->createXMLAddress());
 
-        $url = "https://secure.shippingapis.com/ShippingAPI.dll?API=Verify&XML=" . $addressXML;
+        $client = new Client(['base_uri' => 'https://secure.shippingapis.com/', 'verify' => false]);
 
-        return file_get_contents($url);
+        $response =  $client->request(
+
+            'GET',
+
+            "ShippingAPI.dll?API=Verify&XML=$addressXML"
+
+        );
+
+        $body = $response->getBody();
+
+        // var_dump(get_class_methods($body));
+        var_dump(gettype($body->getContents()));
+        // echo $body->getContents();
+         
+
+        exit();
+        // HANDLING GUZZLE RESPONSE
+        // $response->getStatusCode();
+        // $response->getReasonPhrase();
+        // $response->hasHeader('Content-Length')
+        // $response->getHeader('Content-Length');
+        //  $response->getHeaders() as $name => $values
+
+
     }
 }
