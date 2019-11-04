@@ -41,6 +41,25 @@ class Notes {
         ]];
     }
 
+    // UspsServiceProvider.php
+    /**
+     * Get the services provided by the provider.
+     *
+     * (at)return array
+     * 
+     * To defer the loading of a provider, implement the \Illuminate\Contracts\Support\DeferrableProvider 
+     * interface and define a provides method. 
+     * The provides method should return the service container bindings registered by the provider:
+     * 
+     */
+    // public function provides()
+    // {
+
+    //   return ['usps'];
+    // }
+
+
+
     /**
      * 
      * The Address Standardization Web Tool corrects errors in street addresses, 
@@ -50,6 +69,9 @@ class Notes {
      * 
      */
 
+    // create more readable functions
+    // $address->isValid()
+
     // public function verify()
     // {
     //     $addressXML = urlencode($this->createXMLAddress());
@@ -57,7 +79,6 @@ class Notes {
     //     return file_get_contents($url);
     // }
 
-    
     // $xml = simplexml_load_string($address->verify());
     // $json = json_encode($xml);
     // $array = json_decode($json, true);

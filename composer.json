@@ -1,7 +1,7 @@
 {
   "name": "ctwillie/laravel-usps",
   "description": "USPS API wrapper for laravel framework",
-  "type": "metapackage",
+  "type": "library",
   "authors": [
     {
       "name": "Cedric Twillie",
@@ -15,9 +15,18 @@
   },
   "autoload": {
     "psr-4": {
-      "ctwillie\\": "src/"
+      "ctwillie\\Usps\\": "src/Usps/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "ctwillie\\Usps\\UspsServiceProvider"
+      ],
+      "aliases": {
+        "Usps": "ctwillie\\Usps\\Facades\\Usps"
+      }
     }
   },
   "minimum-stability": "dev"
-  
 }

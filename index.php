@@ -37,8 +37,7 @@ $addr3 = [
     'Zip4' => null
 ];
 
-$address = new Address([$addr1, $addr2]);
+$address = new Address($addr1);
 
-// create more readable functions
-// $address->isValid()
+
 echo $address->validate();

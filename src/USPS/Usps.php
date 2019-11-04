@@ -7,6 +7,14 @@ use ctwillie\Usps\Address;
 class Usps
 {
 
+    private $config;
+
+    public function __construct(array $config) {
+
+        $this->config = $config;
+
+    }
+
     public function verifyAddress($address)
     {
         if ($address instanceof Address) {

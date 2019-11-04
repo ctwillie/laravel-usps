@@ -1,3 +1,6 @@
 /vendor
-/src/Usps/MultipleAddress.php
 /.vs
+index.php
+notes.json
+notes.php
+ert-type

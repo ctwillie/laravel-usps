@@ -33,12 +33,6 @@ class Address
         'Zip4' => ''
     ];
 
-    /**
-     * The addresses array is optional.
-     * 
-     * @param array $addresses  A single or multi-dimensional array of address descriptors
-     * 
-     */
     public function __construct(array $addresses = [])
     {
         // Process array of addresses passed
@@ -48,7 +42,7 @@ class Address
 
                 // check for 5 address limit
                 if (count($this->addresses) === 5) {
-                    throw new \Exception('Only five addresses can be validated per request');
+                    throw new \Exception('USPS: Only five addresses can be validated per request.');
                 }
 
                 // Set to address template
