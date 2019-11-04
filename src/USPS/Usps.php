@@ -15,17 +15,17 @@ class Usps
 
     }
 
-    public function verifyAddress($address)
+    public function validateAddress($address)
     {
         if ($address instanceof Address) {
 
-            return $address->verify();
+            return $address->validate();
         
         } else {
 
             $address = new Address($address);
 
-            return $address->verify();
+            return $address->validate();
 
         }
 
