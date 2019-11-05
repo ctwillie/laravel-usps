@@ -23,6 +23,7 @@ by adding this class to the providers array.
 'providers' => [
     ...
     ctwillie\Usps\UspsServiceProvider::class
+];
 ```
 Then add an alias for the class also in `config/app.php` inside the aliases array.
 
@@ -30,13 +31,14 @@ Then add an alias for the class also in `config/app.php` inside the aliases arra
 'aliases' => [
     ...
     'Usps' => ctwillie\Usps\UspsServiceProvider::class
+];
 ```
 
 ## Configuration
 
 There are two important configurations.
 1. Your USPS user ID:
-    - If you have not received your USPS user ID, follow the link in the [prerequisites section](#Prerequisites) to register with the 
+    - If you have not received your USPS user ID, follow the link in the [prerequisites (#Prerequisites) section  to register with the 
       United States Postal Service. It is required to use this package.
 2. Whether you want SSL verification enabled for API requests:
     - This setting is set to `true` by default for security reasons. You can override this behavior by setting the `verrifyssl` config     setting to `false`. Do this at your own risk. Or, you can take the steps neccessary to add the certificate to your machine to be     recognized.
@@ -45,8 +47,10 @@ In `config/services.php` add these two settings.
 
 ```php
 'usps' => [
+
     'userid' => '**********',
     'verifyssl' => true
+
 ]
 ```
 

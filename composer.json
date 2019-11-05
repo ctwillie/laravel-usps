@@ -2,6 +2,7 @@
   "name": "ctwillie/laravel-usps",
   "description": "USPS API wrapper for laravel framework",
   "type": "library",
+  "license": "MIT",
   "authors": [
     {
       "name": "Cedric Twillie",
