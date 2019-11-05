@@ -43,7 +43,7 @@ abstract class API {
 
     protected function convertToXML()
     {
-        $xml = ArrayToXml::convert( $this->getRequestData,
+        $xml = ArrayToXml::convert( $this->getRequestData(),
             [
                 'rootElementName' => $this->rootElementName,
 
@@ -53,13 +53,13 @@ abstract class API {
         );
         return urlencode($xml);
     }
-    
+
     public function validate()
     {
         return $this->makeRequest();
     }
 
-    abstract public function getRequestData();
+    abstract public function getRequestData() : array;
 
     public function makeRequest()
     {
