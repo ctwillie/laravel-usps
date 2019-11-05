@@ -76,7 +76,7 @@ class Address
             [
                 'rootElementName' => 'AddressValidateRequest',
 
-                '_attributes' => ['USERID' => config('services.usps.userId')]
+                '_attributes' => ['USERID' => config('services.usps.userid')]
 
             ], false
         );
@@ -86,7 +86,7 @@ class Address
     {
         $addressXML = urlencode($this->convertAddressesToXML());
 
-        $client = new Client(['base_uri' => 'https://secure.shippingapis.com/', 'verify' => config('services.usps.verifySsl')]);
+        $client = new Client(['base_uri' => 'https://secure.shippingapis.com/', 'verify' => config('services.usps.verifyssl')]);
 
         $response =  $client->request('GET', "ShippingAPI.dll?API=Verify&XML=$addressXML");
 
