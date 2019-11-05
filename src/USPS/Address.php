@@ -73,7 +73,7 @@ class Address extends API
         }
     }
 
-    public function getRequestData()
+    public function getRequestData() : array
     {
         return ['Address' => $this->addresses];
     }
