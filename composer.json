@@ -1,7 +1,15 @@
 {
   "name": "ctwillie/laravel-usps",
-  "description": "USPS API wrapper for laravel framework",
   "type": "library",
+  "description": "USPS API wrapper for Laravel 6 framework",
+  "keywords": [
+    "laravel",
+    "laravel 6",
+    "laravel usps",
+    "laravel 6 usps",
+    "usps",
+    "usps api"
+  ],
   "license": "MIT",
   "authors": [
     {

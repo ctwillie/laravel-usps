@@ -2,11 +2,12 @@
 
 namespace ctwillie\Usps;
 
-use Spatie\ArrayToXml\ArrayToXml;
-use GuzzleHttp\Client;
-
-class Address
+class Address extends API
 {
+    // use map to determine root element
+    // key will be api type ('verify' => 'AddressValidateRequest')
+    protected $rootElementName = 'AddressValidateRequest';
+    protected $apiType = 'Verify';
     protected $addresses = [];
     protected $allowedProperties = [
         'Address1',
@@ -28,6 +29,8 @@ class Address
 
     public function __construct(array $addresses = [])
     {
+        parent::__construct();
+
         // Process array of addresses
         if (array_key_exists(0, $addresses)) {
 
@@ -70,26 +73,8 @@ class Address
         }
     }
 
-    protected function convertAddressesToXML()
+    public function getRequestData()
     {
-        return ArrayToXml::convert( ['Address' => $this->addresses],
-            [
-                'rootElementName' => 'AddressValidateRequest',
-
-                '_attributes' => ['USERID' => config('services.usps.userid')]
-
-            ], false
-        );
-    }
-
-    public function validate()
-    {
-        $addressXML = urlencode($this->convertAddressesToXML());
-
-        $client = new Client(['base_uri' => 'https://secure.shippingapis.com/', 'verify' => config('services.usps.verifyssl')]);
-
-        $response =  $client->request('GET', "ShippingAPI.dll?API=Verify&XML=$addressXML");
-
-        return $response->getBody();
+        return ['Address' => $this->addresses];
     }
 }

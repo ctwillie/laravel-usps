@@ -40,23 +40,27 @@ There are two important configurations.
 1. Your USPS user ID:
     - If you have not received your USPS user ID, follow the link in the [prerequisites](#Prerequisites) section  to register with the 
       United States Postal Service. It is required to use this package.
+
 2. Whether you want SSL verification enabled for API requests:
-    - This setting is set to `true` by default for security reasons. You can override this behavior by setting the `verrifyssl` config     setting to `false`. Do this at your own risk. Or, you can take the steps neccessary to add the certificate to your machine to be     recognized.
+    - This setting is set to `true` by default for security reasons. You can override this behavior by setting the `verrifyssl` config     setting to `false`. Do this at your own risk.
+
+We recommend placing all configuration settings in your `.env` file and use Laravel's `env()` helper function to access these values.
 
 In `config/services.php` add these two settings.
 
 ```php
 'usps' => [
 
-    'userid' => '**********',
-    'verifyssl' => true
+    'userid' => env('USPS_USER_ID'), // ********
+    'verifyssl' => env('USPS_VERIFY_SSL') // true|false
 
-]
+];
 ```
 
 ## Usage
 
-Working on API usage instructions.
+The current features offered by this package are listed below.
+ - [Address Verification](#Address)
 
 ## Contributing
 
