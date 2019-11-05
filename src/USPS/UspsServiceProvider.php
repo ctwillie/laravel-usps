@@ -26,16 +26,16 @@ class UspsServiceProvider extends ServiceProvider
         throw new \Exception('USPS: Invalid configuration syntax defined in services.php. Configuration must be an array.');
       }
 
-      // makes sure USPS username is defined in config
-      if ( ! array_key_exists('username', $config) ) {
+      // makes sure USPS userId is defined in config
+      if ( ! array_key_exists('userId', $config) ) {
 
-        throw new \Exception('USPS: A USPS username is required in services.php. None found.');
+        throw new \Exception('USPS: A USPS user ID is required in services.php. None found.');
       }
 
-      // if 'verifyssl' is not defined in config, default to true
-      if ( ! array_key_exists('verifyssl', $config) ) {
+      // if 'verifySsl' is not defined in config, default to true
+      if ( ! array_key_exists('verifySsl', $config) ) {
 
-        config(['services.usps.verifyssl' => true]);
+        config(['services.usps.verifySsl' => true]);
 
       }
 

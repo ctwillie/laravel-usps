@@ -46,7 +46,7 @@ In `config/services.php` add these two settings.
 ```php
 'usps' => [
     'userId' => '**********',
-    'verifyssl' => true
+    'verifySsl' => true
 ]
 ```
 
