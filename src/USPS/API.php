@@ -47,7 +47,7 @@ abstract class API {
             [
                 'rootElementName' => $this->rootElementName,
 
-                '_attributes' => ['USERID' => $this->userid]
+                '_attributes' => ['USERID' => $this->userId]
 
             ], false
         );
