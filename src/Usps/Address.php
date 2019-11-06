@@ -2,11 +2,14 @@
 
 namespace ctwillie\Usps;
 
+/**
+ * This class gathers data for the 'Verify' api route
+ * 
+ * It is responsible for formatting address request data that
+ * will be handled by the API class
+ */
 class Address extends API
 {
-    // use map to determine root element
-    // key will be api type ('verify' => 'AddressValidateRequest')
-    protected $rootElementName = 'AddressValidateRequest';
     protected $apiType = 'Verify';
     protected $addresses = [];
     protected $allowedProperties = ['Address1','Address2','City','State','Zip4','Zip5'];
@@ -16,8 +19,6 @@ class Address extends API
      * Handles single or multiple addresses passes to constructor
      * 
      * @param array $addresses
-     * @return void
-     * 
      */
     public function __construct(array $addresses = [])
     {
@@ -26,11 +27,9 @@ class Address extends API
     }
 
     /**
-     * Handles multiple addresses 
+     * Handles adding multiple addresses 
      * 
      * @param array $addresses
-     * @return void
-     * 
      */
     public function handleMultipleAddresses(array $addresses)
     {
@@ -55,13 +54,9 @@ class Address extends API
     }
 
     /**
-     * Handles single address 
+     * Handles adding a single address
      * 
      * @param array $address
-     * @return void
-     * 
-     * Add addAddress method which calls this method and checks five address limit
-     * 
      */
     public function handleSingleAddress(array $address)
     {
@@ -80,7 +75,12 @@ class Address extends API
         }
     }
 
-    public function getRequestData() : array
+    /**
+     * Formats the request data.
+     * 
+     * @return array
+     */
+    public function getRequestData()
     {
         return ['Address' => $this->addresses];
     }

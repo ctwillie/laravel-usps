@@ -1,6 +1,6 @@
 # Laravel-Usps
 
-This package provides a very simple wrapper for the United States Postal Service API. Currently, this package only provides address verification features, but will soon comprise all features offered by the USPS API. In the meantime, consider using [johnpaulmedina/laravel-usps](https://github.com/johnpaulmedina/laravel-usps), which is a great package.
+This package provides a very simple wrapper for the United States Postal Service API. Currently, this package only provides address validation features, but will soon comprise all features offered by the USPS API. In the meantime, consider using [johnpaulmedina/laravel-usps](https://github.com/johnpaulmedina/laravel-usps), which is a great package.
 
 ### Prerequisites
 
@@ -42,7 +42,49 @@ In `config/services.php` add these three settings.
 ## Usage
 
 The current features offered by this package are listed below.
- - [Address Verification](#Address)
+ - [Address Validation](#Address)
+
+
+## Address Validation
+
+This `Address` class handles creating and formatting address data. Pass the constructor an associative array of address details. Array keys are case-sensitive.
+Below is an example of creating an address and making an api request for validation.
+
+```php
+use ctwillie\Usps\Address;
+
+$address = new Address([
+    'Address2' => '6406 Ivy Lane',
+    'City' => 'Greenbelt',
+    'State' => 'MD',
+    'Zip5' => 20770
+]);
+
+$response = $address->validate();
+```
+The USPS api limits 5 address validations per request. If you need to validate more than one address at a time, pass a multi dim array to the `Address` constructor.
+
+```php
+use ctwillie\Usps\Address;
+
+$address1 = new Address([
+    'Address2' => '6406 Ivy Lane',
+    'City' => 'Greenbelt',
+    'State' => 'MD',
+    'Zip5' => 20770
+]);
+
+$address2 = new Address([
+    'Address2' => '6406 Ivy Lane',
+    'City' => 'Greenbelt',
+    'State' => 'MD',
+    'Zip5' => 20770
+]);
+
+$addresses = [$address1, $address2];
+
+$response = $addresses->validate();
+```
 
 ## Contributing
 
