@@ -24,7 +24,7 @@ There are three important configurations.
     - This setting is set to `true` by default for security reasons. You can override this behavior by setting the `verrifyssl` config     setting to `false`.   Do this at your own risk.
 
 3. Which environment you are working in:
-	- The options are 'local' and 'production' which tell the package which API url to use, testing or production respectively. If no configuration is found     for `env`, it will default to the environment recognized by laravel. This setting takes precedence over `APP_ENV` from `.env` file.
+	- The options are `'local' and 'production'` which tell the package which API url to use, testing or production respectively. If no configuration is found     for `env`, it will default to the environment recognized by laravel. This setting takes precedence over `APP_ENV` from your `.env` file.
 
 We recommend placing all configuration settings in your `.env` file and use Laravel's `env()` helper function to access these values.
 
@@ -41,13 +41,13 @@ In `config/services.php` add these three settings.
 
 ## Usage
 
-The current features offered by this package are listed below.
- - [Address Validation](#Address)
+The current features offered by this package are:
+ - [Address Validation](#Address-Validation) 
 
 
 ## Address Validation
 
-This `Address` class handles creating and formatting address data. Pass the constructor an associative array of address details. Array keys are case-sensitive.
+The `Address` class handles creating and formatting address data. Pass the constructor an associative array of address details. Array keys are case-sensitive.
 Below is an example of creating an address and making an api request for validation.
 
 ```php
@@ -67,21 +67,21 @@ The USPS api limits 5 address validations per request. If you need to validate m
 ```php
 use ctwillie\Usps\Address;
 
-$address1 = new Address([
+$address1 = [
     'Address2' => '6406 Ivy Lane',
     'City' => 'Greenbelt',
     'State' => 'MD',
     'Zip5' => 20770
-]);
+];
 
-$address2 = new Address([
+$address2 = [
     'Address2' => '6406 Ivy Lane',
     'City' => 'Greenbelt',
     'State' => 'MD',
     'Zip5' => 20770
-]);
+];
 
-$addresses = [$address1, $address2];
+$addresses = new Address([$address1, $address2])
 
 $response = $addresses->validate();
 ```
