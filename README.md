@@ -21,22 +21,21 @@ There are three important configurations.
       United States Postal Service. It is required to use this package.
 
 2. Whether you want SSL verification enabled for API requests:
-    - This setting is set to `true` by default for security reasons. You can override this behavior by setting the `verrifyssl` config     setting to `false`. Do this at your own risk.
-
-We recommend placing all configuration settings in your `.env` file and use Laravel's `env()` helper function to access these values.
+    - This setting is set to `true` by default for security reasons. You can override this behavior by setting the `verrifyssl` config     setting to `false`.   Do this at your own risk.
 
 3. Which environment you are working in:
-	- The options are 'local' and 'production' which tell the package which API url to use, testing or production respectively. If no configuration is found for `env`, it will default
-	  to the environment recognized by laravel.
+	- The options are 'local' and 'production' which tell the package which API url to use, testing or production respectively. If no configuration is found     for `env`, it will default to the environment recognized by laravel. This setting takes precedence over `APP_ENV` from `.env` file.
+
+We recommend placing all configuration settings in your `.env` file and use Laravel's `env()` helper function to access these values.
 
 In `config/services.php` add these three settings.
 
 ```php
 'usps' => [
 
-    'userid' => env('USPS_USER_ID'), // ********
-    'verifyssl' => env('USPS_VERIFY_SSL'), // true|false
-	'env' => 'local|production' // this setting takes precedence over .env setting
+    'userid' => env('USPS_USER_ID'), // string
+    'verifyssl' => env('USPS_VERIFY_SSL'), // bool
+	'env' => env('USPS_ENV') //string
 ];
 ```
 
