@@ -24,17 +24,7 @@
   },
   "autoload": {
     "psr-4": {
-      "ctwillie\\Usps\\": "src/Usps/"
-    }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "ctwillie\\Usps\\UspsServiceProvider"
-      ],
-      "aliases": {
-        "Usps": "ctwillie\\Usps\\Facades\\Usps"
-      }
+      "ctwillie\\": "src/"
     }
   },
   "minimum-stability": "dev"
