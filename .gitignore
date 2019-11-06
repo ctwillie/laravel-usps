@@ -1,6 +1,7 @@
 /vendor
 /.vs
+composer.lock
 index.php
-notes.json
 notes.php
-ert-type
+todo.txt
+/src/Removed
