@@ -13,30 +13,9 @@ from the United States Postal Service. This user ID is required to use this pack
 composer require ctwillie/laravel-usps
 ```
 
-## Setup
-
-Starting at Laravel 5.5, this package will be automatically discovered and registered as a service provider.
-For earlier versions of Laravel, you will need to manually register this packages' service provider in `config/app.php`
-by adding this class to the providers array.
-
-```php
-'providers' => [
-    ...
-    ctwillie\Usps\UspsServiceProvider::class
-];
-```
-Then add an alias for the class also in `config/app.php` inside the aliases array.
-
-```php
-'aliases' => [
-    ...
-    'Usps' => ctwillie\Usps\UspsServiceProvider::class
-];
-```
-
 ## Configuration
 
-There are two important configurations.
+There are three important configurations.
 1. Your USPS user ID:
     - If you have not received your USPS user ID, follow the link in the [prerequisites](#Prerequisites) section  to register with the 
       United States Postal Service. It is required to use this package.
@@ -46,14 +25,18 @@ There are two important configurations.
 
 We recommend placing all configuration settings in your `.env` file and use Laravel's `env()` helper function to access these values.
 
-In `config/services.php` add these two settings.
+3. Which environment you are working in:
+	- The options are 'local' and 'production' which tell the package which API url to use, testing or production respectively. If no configuration is found for `env`, it will default
+	  to the environment recognized by laravel.
+
+In `config/services.php` add these three settings.
 
 ```php
 'usps' => [
 
     'userid' => env('USPS_USER_ID'), // ********
-    'verifyssl' => env('USPS_VERIFY_SSL') // true|false
-
+    'verifyssl' => env('USPS_VERIFY_SSL'), // true|false
+	'env' => 'local|production' // this setting takes precedence over .env setting
 ];
 ```
 
