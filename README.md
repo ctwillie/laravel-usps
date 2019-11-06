@@ -35,7 +35,7 @@ In `config/services.php` add these three settings.
 
     'userid' => env('USPS_USER_ID'), // string
     'verifyssl' => env('USPS_VERIFY_SSL'), // bool
-	'env' => env('USPS_ENV') //string
+    'env' => env('USPS_ENV') //string
 ];
 ```
 
