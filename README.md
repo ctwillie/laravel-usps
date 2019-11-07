@@ -1,6 +1,6 @@
 # Laravel-Usps
 
-This package provides a very simple wrapper for the United States Postal Service API. Currently, this package only provides address verification features, but will soon comprise all features offered by the USPS API. In the meantime, consider using [johnpaulmedina/laravel-usps](https://github.com/johnpaulmedina/laravel-usps), which is a great package.
+This package provides a very simple wrapper for the United States Postal Service API. Currently, this package only provides address validation features, but will soon comprise all features offered by the USPS API. In the meantime, consider using [johnpaulmedina/laravel-usps](https://github.com/johnpaulmedina/laravel-usps), which is a great package.
 
 ### Prerequisites
 
@@ -13,54 +13,80 @@ from the United States Postal Service. This user ID is required to use this pack
 composer require ctwillie/laravel-usps
 ```
 
-## Setup
-
-Starting at Laravel 5.5, this package will be automatically discovered and registered as a service provider.
-For earlier versions of Laravel, you will need to manually register this packages' service provider in `config/app.php`
-by adding this class to the providers array.
-
-```php
-'providers' => [
-    ...
-    ctwillie\Usps\UspsServiceProvider::class
-];
-```
-Then add an alias for the class also in `config/app.php` inside the aliases array.
-
-```php
-'aliases' => [
-    ...
-    'Usps' => ctwillie\Usps\UspsServiceProvider::class
-];
-```
-
 ## Configuration
 
-There are two important configurations.
+There are three important configurations.
 1. Your USPS user ID:
     - If you have not received your USPS user ID, follow the link in the [prerequisites](#Prerequisites) section  to register with the 
       United States Postal Service. It is required to use this package.
 
 2. Whether you want SSL verification enabled for API requests:
-    - This setting is set to `true` by default for security reasons. You can override this behavior by setting the `verrifyssl` config     setting to `false`. Do this at your own risk.
+    - This setting is set to `true` by default for security reasons. You can override this behavior by setting the `verrifyssl` config     setting to `false`.   Do this at your own risk.
+
+3. Which environment you are working in:
+	- The options are `'local' and 'production'` which tell the package which API url to use, testing or production respectively. If no configuration is found     for `env`, it will default to the environment recognized by laravel. This setting takes precedence over `APP_ENV` from your `.env` file.
 
 We recommend placing all configuration settings in your `.env` file and use Laravel's `env()` helper function to access these values.
 
-In `config/services.php` add these two settings.
+In `config/services.php` add these three settings.
 
 ```php
 'usps' => [
 
-    'userid' => env('USPS_USER_ID'), // ********
-    'verifyssl' => env('USPS_VERIFY_SSL') // true|false
-
+    'userid' => env('USPS_USER_ID'), // string
+    'verifyssl' => env('USPS_VERIFY_SSL'), // bool
+    'env' => env('USPS_ENV') //string
 ];
 ```
 
 ## Usage
 
-The current features offered by this package are listed below.
- - [Address Verification](#Address)
+The current features offered by this package are:
+ - [Address Validation](#Address-Validation) 
+
+
+## Address Validation
+
+The `Address` class handles creating and formatting address data. Pass the constructor an associative array of address details. Array keys are case-sensitive.
+Below is an example of creating an address and making an api request for validation.
+
+```php
+use ctwillie\Usps\Address;
+
+$address = new Address([
+    'Address2' => '6406 Ivy Lane',
+    'City' => 'Greenbelt',
+    'State' => 'MD',
+    'Zip5' => 20770
+]);
+
+$response = $address->validate();
+```
+The USPS api supports up to 5 address validations per request. If you need to validate more than one address at a time, pass a multi dim array to the `Address` constructor.
+
+```php
+use ctwillie\Usps\Address;
+
+$address1 = [
+    'Address2' => '6406 Ivy Lane',
+    'City' => 'Greenbelt',
+    'State' => 'MD',
+    'Zip5' => 20770
+];
+
+$address2 = [
+    'Address2' => '6406 Ivy Lane',
+    'City' => 'Greenbelt',
+    'State' => 'MD',
+    'Zip5' => 20770
+];
+
+$addresses = new Address([$address1, $address2])
+
+$response = $addresses->validate();
+```
+
+The response will contain the [corrected address](https://www.usps.com/business/web-tools-apis/address-information-api.pdf), or an error if not enough information was given or the address does not exists.
 
 ## Contributing
 
