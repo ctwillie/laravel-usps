@@ -24,7 +24,7 @@
   },
   "autoload": {
     "psr-4": {
-      "ctwillie\\": "src/"
+      "ctwillie\\Usps\\": "src/"
     }
   },
   "minimum-stability": "dev"

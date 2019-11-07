@@ -62,7 +62,7 @@ $address = new Address([
 
 $response = $address->validate();
 ```
-The USPS api supports up to 5 address validations per request. If you need to validate more than one address at a time, pass a multi dim array to the `Address` constructor.
+The USPS api supports up to 5 address validations per request. If you need to validate more than one address at a time, pass an array of addresses to the `Address` constructor.
 
 ```php
 use ctwillie\Usps\Address;
@@ -81,7 +81,7 @@ $address2 = [
     'Zip5' => 20770
 ];
 
-$addresses = new Address([$address1, $address2])
+$addresses = new Address([$address1, $address2]);
 
 $response = $addresses->validate();
 ```

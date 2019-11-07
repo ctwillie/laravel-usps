@@ -62,18 +62,20 @@ abstract class API {
     public function checkForUserId()
     {
         if (is_null($this->userId)) {
+
             throw new \Exception('USPS: A user ID is required. None found in config/services.php');
+
         }
     }
 
     /**
-     * Converts entity data into xml format and url encodes
+     * Converts entity data into xml format
      * 
      * @return string
      */
     protected function convertToXML()
     {
-        $xml = ArrayToXml::convert( $this->getRequestData(),
+        return ArrayToXml::convert( $this->getRequestData(),
             [
                 'rootElementName' => $this->rootElements[$this->apiType],
 
@@ -81,28 +83,61 @@ abstract class API {
 
             ], false
         );
-        return urlencode($xml);
     }
 
     /**
-     * Handles making the api request
+     * Handles making the api request and formatting response type
      * 
      * This method handles creating the http client and gathering
      * all necessary data for making the api request.
      * 
-     * @return StreamInterface of the response content body
+     * @param string|null $responseType
+     * @return mixed depending on $responseType param
      */
-    public function makeRequest()
+    public function makeRequest(string $responseType = null)
     {
         $this->checkForUserId();
 
-        $xml = $this->convertToXML();
+        $xml = urlencode($this->convertToXML());
         
         $client = new Client(['base_uri' => $this->apiUrl, 'verify' => config('services.usps.verifyssl', true)]);
 
         $response =  $client->request('GET', "?API=$this->apiType&XML=$xml");
 
-        return $response->getBody();
+        // converts stream to xml string
+        $body = (string) $response->getBody();
+        
+        return $this->convertResponse($body, $responseType);
+    }
+
+    /**
+     * Responsible for converting api responses to desired format
+     * 
+     * The api response will return an assoc array by default
+     * 
+     * @param string $body xml string from api response
+     * @param string $responseType desired response format ('json', 'object', 'string')
+     * @return mixed
+     */
+    public function convertResponse($body, $responseType)
+    {
+        switch(strtolower($responseType)) {
+            case 'string':
+                return $body;
+                break;
+            case 'json':
+                $xml = simplexml_load_string( $body );
+                return json_encode($xml);
+                break;
+            case 'object':
+                $xml = simplexml_load_string($body);
+                return json_decode(json_encode($xml));
+                break;
+            default:
+                $xml = simplexml_load_string($body);
+                return json_decode(json_encode($xml), true);
+                break;
+        }
     }
 
     /**
@@ -112,9 +147,15 @@ abstract class API {
      */
     abstract public function getRequestData();
 
-    public function validate()
+    /**
+     * Alias for makeRequest
+     * 
+     * @param string $responseType The desired format of the response
+     * @return mixed depending on $responseType param
+     */
+    public function validate(string $responseType = null)
     {
-        return $this->makeRequest();
+        return $this->makeRequest($responseType);
     }
 
 }
