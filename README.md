@@ -75,10 +75,10 @@ $address1 = [
 ];
 
 $address2 = [
-    'Address2' => '6406 Ivy Lane',
-    'City' => 'Greenbelt',
-    'State' => 'MD',
-    'Zip5' => 20770
+    'Address2' => '2185 Sandy Drive',
+    'City' => 'Franklin',
+    'State' => 'VA',
+    'Zip5' => 32050
 ];
 
 $addresses = new Address([$address1, $address2]);
@@ -87,6 +87,18 @@ $response = $addresses->validate();
 ```
 
 The response will contain the [corrected address](https://www.usps.com/business/web-tools-apis/address-information-api.pdf), or an error if not enough information was given or the address does not exists.
+
+## Response Formatting
+
+You can specify the format of the response by passing an optional, case-insensitive parameter to the validate method. The default format is an associative array.
+
+```php
+$address = new Address([/* address data */ ]);
+
+$json = $address->validate('json');
+$object = $address->validate('object');
+$string = $address->validate('string');
+```
 
 ## Contributing
 
