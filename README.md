@@ -93,7 +93,7 @@ The response will contain the [corrected address](https://www.usps.com/business/
 You can specify the format of the response by passing an optional, case-insensitive parameter to the validate method. The default format is an associative array.
 
 ```php
-$address = new Address([/* address data */ ]);
+$address = new Address([/* address info */ ]);
 
 $json = $address->validate('json');
 $object = $address->validate('object');
