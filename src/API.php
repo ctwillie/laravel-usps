@@ -34,7 +34,7 @@ abstract class API {
     }
 
     /** Determines the current application env */
-    public function setEnvironment()
+    protected function setEnvironment()
     {
         if (Config::has('services.usps.env')) {
 
@@ -49,7 +49,7 @@ abstract class API {
     }
 
     /** Determines the api url to use based on running env */
-    public function setUrl()
+    protected function setUrl()
     {
         $this->apiUrl = $this->env === 'local' ? self::LOCAL_URL : self::PROD_URL;
     }
@@ -59,7 +59,7 @@ abstract class API {
      * 
      * @throws Exception If no userid is found in config/services.php
      */
-    public function checkForUserId()
+    protected function checkForUserId()
     {
         if (is_null($this->userId)) {
 
@@ -94,7 +94,7 @@ abstract class API {
      * @param string|null $responseType
      * @return mixed depending on $responseType param
      */
-    public function makeRequest(string $responseType = null)
+    protected function makeRequest(string $responseType = null)
     {
         $this->checkForUserId();
 
@@ -119,7 +119,7 @@ abstract class API {
      * @param string $responseType desired response format ('json', 'object', 'string')
      * @return mixed
      */
-    public function convertResponse($body, $responseType)
+    protected function convertResponse($body, $responseType)
     {
         switch(strtolower($responseType)) {
             case 'string':
@@ -145,7 +145,7 @@ abstract class API {
      * 
      * @return array
      */
-    abstract public function getRequestData();
+    abstract protected function getRequestData();
 
     /**
      * Alias for makeRequest
