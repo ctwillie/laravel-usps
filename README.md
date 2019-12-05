@@ -1,6 +1,6 @@
 # Laravel-Usps
 
-This package provides a very simple wrapper for the United States Postal Service API. Currently, this package only provides address validation features, but will soon comprise all features offered by the USPS API. In the meantime, consider using [johnpaulmedina/laravel-usps](https://github.com/johnpaulmedina/laravel-usps), which is a great package.
+This package provides a very simple wrapper for the United States Postal Service API. Currently, this package only provides address validation features, but will soon comprise all features offered by the USPS API.
 
 ### Prerequisites
 
