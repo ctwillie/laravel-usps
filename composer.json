@@ -1,6 +1,5 @@
 {
   "name": "ctwillie/laravel-usps",
-  "type": "library",
   "description": "USPS API wrapper for Laravel 6 framework",
   "keywords": [
     "laravel",
